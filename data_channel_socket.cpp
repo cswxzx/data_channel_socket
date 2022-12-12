@@ -12,6 +12,7 @@ struct DataChannelSocket::_impl_t {
 	}
 
 	int start() {
+        m_channel->RegisterObserver(m_wrapper);
 		m_handle = SocketPair::instance()->create_pair(m_fd);
 		if (m_handle == 0) {
             return -1;						
@@ -21,6 +22,7 @@ struct DataChannelSocket::_impl_t {
 	}
 
 	int stop() {
+        m_channel->UnregisterObserver();
 		SocketPair::instance()->delete_pair(m_handle);
         return 0;
 	}
